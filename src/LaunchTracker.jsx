@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import './LaunchTracker.css';
 
 const SpaceX_API_URL = "https://api.spacexdata.com/v4/launches";
 
@@ -10,7 +11,7 @@ function LaunchTracker() {
   const launchesPerPage = 10;
 
   useEffect(() => {
-    fetch(SpaceX_API_URL)
+        fetch(SpaceX_API_URL)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch data");
@@ -38,21 +39,21 @@ function LaunchTracker() {
   const handleClick = (pageNumber) => {
     setCurrentPage(pageNumber);
     window.scrollTo({
-      top: 0,
-      behavior: "smooth",
+      top:0,
+      behavior: 'smooth',
     });
   };
 
   return (
     <div>
-      <h1>SpaceX launch Tracker</h1>
+      <h1 className="title">SpaceX launch Tracker</h1>
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
-      <ul>
+      <ul className="launches-list">
         {currentLaunches.map((launch) => (
-          <li key={launch.id}>
+          <li key={launch.id} className="launch-item">
             <h2>{launch.name}</h2>
-            <p>Date: {new Date(launch.data_utc).toLocaleDateString()}</p>
+            <p>Date: {new Date(launch.date_utc).toLocaleDateString()}</p>
             <p>Rocket: {launch.rocket}</p>
             <p>Launch Site: {launch.launchpad}</p>
             <p>
@@ -71,13 +72,14 @@ function LaunchTracker() {
           </li>
         ))}
       </ul>
-      <div>
+      <div className="pagination">
         {Array.from({ length: totalPage }, (_, index) => index + 1).map(
           (pageNumber) => (
             <button
               key={pageNumber}
               onClick={() => handleClick(pageNumber)}
               disabled={pageNumber === currentPage}
+              className={`pagination-button ${pageNumber === currentPage ? 'active':''}`}
             >
               {pageNumber}
             </button>
