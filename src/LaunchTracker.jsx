@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import './LaunchTracker.css';
+import "./LaunchTracker.css";
 
 const SpaceX_API_URL = "https://api.spacexdata.com/v4/launches";
 
@@ -11,7 +11,7 @@ function LaunchTracker() {
   const launchesPerPage = 10;
 
   useEffect(() => {
-        fetch(SpaceX_API_URL)
+    fetch(SpaceX_API_URL)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch data");
@@ -39,10 +39,10 @@ function LaunchTracker() {
   const handleClick = (pageNumber) => {
     setCurrentPage(pageNumber);
     window.scrollTo({
-        top:0,
-        behavior: 'smooth'
+      top: 0,
+      behavior: "smooth",
     });
-};
+  };
   return (
     <div>
       <h1 className="title">SpaceX launch Tracker</h1>
@@ -78,7 +78,9 @@ function LaunchTracker() {
               key={pageNumber}
               onClick={() => handleClick(pageNumber)}
               disabled={pageNumber === currentPage}
-              className={`pagination-button ${pageNumber === currentPage ? 'active':''}`}
+              className={`pagination-button ${
+                pageNumber === currentPage ? "active" : ""
+              }`}
             >
               {pageNumber}
             </button>
