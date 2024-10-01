@@ -27,13 +27,29 @@ function LaunchTracker() {
       }, []);
   });
 
+  const indexOfLastLaunch = currentPage * launchesPerPage;
+  const indexOfFirsrtLaunch = indexOfLastLaunch - launchesPerPage;
+  const currentLaunches = launches.slice(
+    indexOfFirsrtLaunch,
+    indexOfLastLaunch
+  );
+  const totalPage = Math.ceil(launches.length / launchesPerPage);
+
+  const handleClick = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <div>
       <h1>SpaceX launch Tracker</h1>
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
       <ul>
-        {launches.map((launch) => (
+        {currentLaunches.map((launch) => (
           <li key={launch.id}>
             <h2>{launch.name}</h2>
             <p>Date: {new Date(launch.data_utc).toLocaleDateString()}</p>
@@ -55,6 +71,19 @@ function LaunchTracker() {
           </li>
         ))}
       </ul>
+      <div>
+        {Array.from({ length: totalPage }, (_, index) => index + 1).map(
+          (pageNumber) => (
+            <button
+              key={pageNumber}
+              onClick={() => handleClick(pageNumber)}
+              disabled={pageNumber === currentPage}
+            >
+              {pageNumber}
+            </button>
+          )
+        )}
+      </div>
     </div>
   );
 }
