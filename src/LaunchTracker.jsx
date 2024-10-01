@@ -39,11 +39,10 @@ function LaunchTracker() {
   const handleClick = (pageNumber) => {
     setCurrentPage(pageNumber);
     window.scrollTo({
-      top:0,
-      behavior: 'smooth',
+        top:0,
+        behavior: 'smooth'
     });
-  };
-
+};
   return (
     <div>
       <h1 className="title">SpaceX launch Tracker</h1>
